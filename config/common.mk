@@ -68,6 +68,17 @@ $(foreach f,$(wildcard vendor/havoc/prebuilt/common/etc/init/*.rc),\
 PRODUCT_COPY_FILES += \
     vendor/havoc/prebuilt/common/lib/content-types.properties:$(TARGET_COPY_OUT_SYSTEM)/lib/content-types.properties
 
+# pixel style
+$(call inherit-product, vendor/pixelstyle/config.mk)
+
+# Themed bootanimation
+TARGET_MISC_BLOCK_OFFSET ?= 0
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.misc.block.offset=$(TARGET_MISC_BLOCK_OFFSET)
+PRODUCT_PACKAGES += \
+    misc_writer_system \
+    themed_bootanimation
+
 # Enable Android Beam on all targets
 PRODUCT_COPY_FILES += \
     vendor/havoc/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
@@ -111,10 +122,6 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
-
-# Bootanimation
-PRODUCT_PACKAGES += \
-    bootanimation.zip
 
 # AOSP packages
 PRODUCT_PACKAGES += \
